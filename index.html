@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nica Virtual Assistant</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -69,8 +74,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+[hidden] { display: none !important; }
 body {
+  margin: 0;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-body);
@@ -94,15 +100,20 @@ a { color: var(--accent); }
 .logo { background: var(--logo) center / contain no-repeat; }
 
 /* Top bar */
-.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 20px; }
-.brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); text-decoration: none; color: var(--fg); }
-.nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.95rem; }
-.nav a { color: var(--muted); text-decoration: none; }
-.nav a:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 4px; }
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 4px 24px; flex-wrap: wrap; padding-block: 12px 0; }
+main > .page:not(.hero) { scroll-margin-top: 0; }
+main > section.page { border-top: 0; padding-top: 44px; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; padding-bottom: 8px; font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); text-decoration: none; color: var(--fg); }
+.nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 0.95rem; }
+.nav a { color: var(--muted); text-decoration: none; padding: 8px 0 10px; border-bottom: 3px solid transparent; }
+.nav a[aria-current="page"] { color: var(--fg); font-weight: 600; border-bottom-color: var(--accent); }
+.nav a:hover { color: var(--fg); }
 
 /* Hero */
 .hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 48px; align-items: center; padding-block: 56px 72px; }
-.hero h1 { font-size: clamp(2rem, 1.3rem + 2.8vw, 3.1rem); font-weight: 700; margin-block: 16px 20px; }
+.hero h1 { font-size: clamp(1.85rem, 1.2rem + 2.2vw, 2.7rem); font-weight: 700; margin-block: 16px 20px; }
 .hero h1 mark { background: var(--hl); color: var(--hl-ink); padding: 0 0.12em; border-radius: 3px; }
 .lede { font-size: var(--step-1); color: var(--muted); max-width: 34em; }
 .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
@@ -295,14 +306,18 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
   .band section { grid-template-columns: minmax(0, 1fr); }
   .logo-wrap { display: none; }
   section { padding-block: 48px; }
+  .nav { width: 100%; overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; scrollbar-width: none; gap: 20px; }
+  .nav::-webkit-scrollbar { display: none; }
+  main > section.page { padding-top: 32px; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
+</head>
+<body>
 
-<div class="wrap">
-  <header class="top">
-    <a class="brand" href="#top"><span class="logo-tile"><span class="logo" role="img" aria-label="Nica logo"></span></span>Nica</a>
-    <nav class="nav" aria-label="Page sections">
+<header class="topbar">
+  <div class="wrap top">
+    <a class="brand" href="#about"><span class="logo-tile"><span class="logo" role="img" aria-label="Logo"></span></span>Danica Cruz Carambias</a>
+    <nav class="nav" aria-label="Pages">
       <a href="#about">About me</a>
       <a href="#resume">Resume</a>
       <a href="#services">Services</a>
@@ -311,13 +326,16 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
       <a href="#reviews">Reviews</a>
       <a href="#contact">Contact me</a>
     </nav>
-  </header>
+  </div>
+</header>
 
+<div class="wrap">
   <main id="top">
+    <div class="page" id="page-about">
     <div class="hero">
       <div>
         <p class="eyebrow">Virtual assistant &middot; Lead generation &middot; Customer support</p>
-        <h1>I call your leads, <mark>book your appointments</mark>, and keep your clients on track, so you can focus on closing.</h1>
+        <h1>I call your leads, book your appointments, <mark>manage your inbox</mark>, and handle your admin tasks, so you can focus on closing.</h1>
         <p class="lede">Hi, I'm Nica. I help busy business owners stop chasing leads and start talking to buyers.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#contact">Book a free intro call</a>
@@ -332,7 +350,7 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
       <div class="logo-wrap"><div class="logo" role="img" aria-label="Nica logo"></div></div>
     </div>
 
-    <section id="about">
+    <section id="about-me">
       <div class="sec-head">
         <p class="eyebrow">About me</p>
         <h2>One reliable VA for your calls, leads and clients.</h2>
@@ -355,7 +373,9 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
       </div>
     </section>
 
-    <section id="resume">
+    </div>
+
+    <section class="page" id="page-resume">
       <div class="sec-head">
         <p class="eyebrow">Resume</p>
         <h2>More than a decade on the phones and in the pipeline.</h2>
@@ -372,21 +392,21 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
       </ul>
     </section>
 
-    <section id="services">
+    <section class="page" id="page-services">
       <div class="sec-head">
         <p class="eyebrow">Services offered</p>
         <h2>What I can take off your plate.</h2>
       </div>
       <ul class="svc">
         <li><h3>Sales and outreach</h3><p>Cold calling, appointment setting, lead follow-up, pre-qualifying leads, and SMS and social media outreach.</p></li>
-        <li><h3>Administrative support</h3><p>Scheduling and calendar management, data entry, order entry and status updates, Google Sheets trackers, and reporting.</p></li>
+        <li><h3>Administrative support</h3><p>Inbox and email management, scheduling and calendar management, data entry, order entry and status updates, Google Sheets trackers, and reporting.</p></li>
         <li><h3>Client support and onboarding</h3><p>Onboarding new clients, payment follow-up, CRM updates, and keeping client records accurate.</p></li>
         <li><h3>Lead generation</h3><p>List building, skip tracing, keyword and domain research, and promotion campaigns.</p></li>
         <li><h3>Team training and process documentation</h3><p>Training new assistants, writing step-by-step processes, and quality follow-up.</p></li>
       </ul>
     </section>
 
-    <section id="skills">
+    <section class="page" id="page-skills">
       <div class="sec-head">
         <p class="eyebrow">Skills</p>
         <h2>Core skills and tools.</h2>
@@ -394,7 +414,7 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
       <div class="skill-block">
         <h3>Core skills</h3>
         <ul class="chips">
-          <li>Cold calling</li><li>Appointment setting</li><li>Lead generation</li><li>Client onboarding</li><li>Campaign coordination</li><li>CRM management</li><li>Social media content scheduling</li><li>Customer service and collections</li><li>Administrative support</li><li>Data entry and reporting</li><li>Team training</li><li>QuickBooks Online bookkeeping</li><li>HIPAA awareness</li>
+          <li>Cold calling</li><li>Appointment setting</li><li>Lead generation</li><li>Client onboarding</li><li>Campaign coordination</li><li>CRM management</li><li>Social media content scheduling</li><li>Customer service and collections</li><li>Administrative support</li><li>Inbox and email management</li><li>Data entry and reporting</li><li>Team training</li><li>QuickBooks Online bookkeeping</li><li>HIPAA awareness</li>
         </ul>
       </div>
       <div class="skill-block">
@@ -408,7 +428,7 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
       </div>
     </section>
 
-    <section id="certification">
+    <section class="page" id="page-certification">
       <div class="sec-head">
         <p class="eyebrow">Certification</p>
         <h2>Training and certificates.</h2>
@@ -423,7 +443,7 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
       </div>
     </section>
 
-    <section id="reviews">
+    <section class="page" id="page-reviews">
       <div class="sec-head">
         <p class="eyebrow">Testimonials</p>
         <h2>What clients say.</h2>
@@ -463,7 +483,7 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
   </main>
 </div>
 
-<div class="band" id="contact">
+<div class="band page" id="page-contact">
   <div class="wrap">
     <section>
       <div>
@@ -489,14 +509,52 @@ footer { padding-block: 28px; font-size: 0.9rem; color: var(--muted); display: f
 
 <div class="wrap">
   <footer>
-    <span>&copy; 2026 Danica Carambias. All rights reserved.</span>
+    <span>&copy; 2026 Danica Cruz Carambias. All rights reserved.</span>
     <span>Based in the Philippines &middot; PHT (UTC+8)</span>
   </footer>
 </div>
 
 <script>
 (function () {
-  var a = document.getElementById('mail-link');
-  if (a) { a.href = 'mailto:' + ['iamnicayourvirtualassistant', 'gmail.com'].join('@') + '?subject=' + encodeURIComponent('Intro call'); }
+  var pages = ['about', 'resume', 'services', 'skills', 'certification', 'reviews', 'contact'];
+  var links = document.querySelectorAll('.nav a');
+
+  function show(h) {
+    if (pages.indexOf(h) < 0) { h = 'about'; }
+    pages.forEach(function (p) {
+      var el = document.getElementById('page-' + p);
+      if (el) { el.hidden = (p !== h); }
+    });
+    links.forEach(function (a) {
+      if (a.getAttribute('href') === '#' + h) { a.setAttribute('aria-current', 'page'); }
+      else { a.removeAttribute('aria-current'); }
+    });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    var cur = document.querySelector('.nav a[aria-current="page"]');
+    var nav = document.querySelector('.nav');
+    if (cur && nav && nav.scrollWidth > nav.clientWidth) {
+      nav.scrollTo({ left: Math.max(0, cur.offsetLeft - 24), behavior: 'instant' });
+    }
+  }
+  function fromHash() { show((location.hash || '').replace('#', '')); }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) { return; }
+    var h = a.getAttribute('href').slice(1);
+    if (pages.indexOf(h) < 0) { return; }
+    e.preventDefault();
+    show(h);
+    try { history.pushState(null, '', '#' + h); } catch (err) {}
+  });
+  window.addEventListener('hashchange', fromHash);
+  window.addEventListener('popstate', fromHash);
+  fromHash();
+
+  var m = document.getElementById('mail-link');
+  if (m) { m.href = 'mailto:' + ['iamnicayourvirtualassistant', 'gmail.com'].join('@') + '?subject=' + encodeURIComponent('Intro call'); }
 })();
 </script>
+
+</body>
+</html>
